@@ -491,7 +491,7 @@ body.dark .matches-section {
   .matches-section .match-time { max-width: 150px; }
 }
 
-/* ================= LATEST BLOGS (YAKO TV STYLE) ================= */
+/* ================= LATEST BLOGS ================= */
 .blogs-wrapper {
   margin-top: 2rem;
 }
@@ -522,6 +522,7 @@ body.dark .matches-section {
   overflow: hidden;
 }
 
+/* Every row. Only rows containing a link are interactive. */
 .blogPts > * {
   display: block;
   width: 100%;
@@ -535,19 +536,29 @@ body.dark .matches-section {
   box-shadow: none;
   transition: background .15s ease;
   position: relative;
-  cursor: pointer;
 }
 
 .blogPts > *:last-child {
   border-bottom: 0;
 }
 
-.blogPts > *:hover {
+/* Only clickable rows get cursor + hover */
+.blogPts > *.is-linked {
+  cursor: pointer;
+}
+.blogPts > *.is-linked:hover {
   background: #eaeaea;
 }
-
-body.dark .blogPts > *:hover {
+body.dark .blogPts > *.is-linked:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* Make the whole row clickable via the stretched link */
+.blogPts .pTtl a.stretched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .blogPts .pTtl {
@@ -559,6 +570,7 @@ body.dark .blogPts > *:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
 }
 
 .blogPts .pTtl a {
@@ -566,7 +578,7 @@ body.dark .blogPts > *:hover {
   color: inherit;
 }
 
-.blogPts > *:hover .pTtl a {
+.blogPts > *.is-linked:hover .pTtl a {
   color: var(--primary);
 }
 
@@ -882,12 +894,10 @@ body.dark .blogPts > *:hover {
         <h2>Latest Blogs</h2>
       </div>
 
-      <!-- DYNAMIC: filled by JS from blogs.json -->
       <div class="blogPts" id="latestBlogs">
         <div class="ntry"><div class="pCntn"><p class="pSnpt">Loading blogs…</p></div></div>
       </div>
 
-      <!-- VIEW ALL -->
       <div class="blogPg">
         <a href="https://football-feed.pages.dev/blogs/" class="jsLd" style="text-decoration:none; display:block;">View All Blogs</a>
       </div>
@@ -1516,9 +1526,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = b.title || 'Untitled';
       const snippet = b.snippet || '';
       return `
-        <div class="ntry">
+        <div class="ntry is-linked">
           <div class="pCntn">
-            <h3 class="pTtl"><a href="${href}">${escapeHtml(title)}</a></h3>
+            <h3 class="pTtl"><a href="${href}" target="_blank" rel="noopener" class="stretched">${escapeHtml(title)}</a></h3>
             <p class="pSnpt">${escapeHtml(snippet)}</p>
             <div class="pInf"></div>
           </div>
