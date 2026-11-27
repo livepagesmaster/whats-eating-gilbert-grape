@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="All Blogs — Yashintv">
+  <main style="max-width:900px;margin:40px auto;padding:0 20px;">
+    <a href="/" style="display:inline-block;margin-bottom:20px;color:#4338ca;text-decoration:none;font-weight:500;font-size:0.9rem;">← Back to home</a>
+    <h1 style="font-size:1.8rem;margin:0 0 1.5rem;">All Blogs</h1>
+    <div id="allBlogs" style="background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 5px 35px rgba(0,0,0,.05);">
+      <div style="padding:30px;color:#6b7280;text-align:center;">Loading…</div>
+    </div>
+  </main>
+
+  <script is:inline>
+    (async function () {
+      const FEED = 'https://football-feed.pages.dev/blogs.json';
+      const container = document.getElementById('allBlogs');
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+      try {
+        const res = await fetch(FEED, { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const list = Array.isArray(data.all) ? data.all : [];
+        if (!list.length) {
+          container.innerHTML = '<div style="padding:30px;color:#6b7280;text-align:center;">No blogs yet.</div>';
+          return;
+        }
+        container.innerHTML = list.map(b => {
+          const href = '/blogs/' + b.slug;
+          return `<a href="${href}" style="display:block;padding:18px 24px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;">
+            <h2 style="font-size:1.1rem;margin:0 0 6px;color:var(--text);">${esc(b.title || 'Untitled')}</h2>
+            <p style="font-size:13.5px;color:var(--text-muted);margin:0 0 6px;line-height:1.55;">${esc(b.snippet || '')}</p>
+            <div style="font-size:12.5px;color:#9ca3af;">${esc(b.date || '')}</div>
+          </a>`;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = '<div style="padding:30px;color:#ef4444;text-align:center;">Could not load blogs.</div>';
+        console.error(err);
+      }
+    })();
+  </script>
+</BaseLayout>
