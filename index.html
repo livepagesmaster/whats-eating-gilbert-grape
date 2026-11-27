@@ -11,7 +11,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 *::-webkit-scrollbar { display: none; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; } /* FIX: was 'smooth' — caused jump-to-top on refresh */
 
 :root {
   --bg: #f4f6f9;
@@ -682,9 +682,9 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 </footer>
 
 <script>
-// Prevent scroll jumping on refresh
+// FIX: allow browser to restore scroll position on refresh (was 'manual' → always jumped to top)
 if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
+  history.scrollRestoration = 'auto';
 }
 
 document.getElementById('footerText').innerHTML = `© ${new Date().getFullYear()} Yashintv`;
