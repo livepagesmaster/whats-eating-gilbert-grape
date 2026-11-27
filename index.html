@@ -396,7 +396,9 @@ body.dark .matches-section {
   box-shadow: 0 5px 35px rgba(0, 0, 0, .05);
   overflow: hidden;
 }
-.blogPts > * {
+
+/* The entire row is clickable */
+.blogPts > .ntry {
   display: block; width: 100%; max-width: 100%;
   margin: 0; padding: 18px 25px;
   background: transparent;
@@ -404,14 +406,19 @@ body.dark .matches-section {
   border-radius: 0; box-shadow: none;
   transition: background .15s ease;
   position: relative;
+  cursor: pointer;
 }
-.blogPts > *:last-child { border-bottom: 0; }
-.blogPts > *.is-linked { cursor: pointer; }
-.blogPts > *.is-linked:hover { background: #eaeaea; }
-body.dark .blogPts > *.is-linked:hover { background: rgba(255, 255, 255, 0.08); }
+.blogPts > .ntry:last-child { border-bottom: 0; }
+.blogPts > .ntry:hover { background: #eaeaea; }
+body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* Whole-row clickable via stretched link */
-.blogPts .pTtl a.stretched::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+/* Invisible stretched link */
+.blogPts .pTtl a.stretched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 
 .blogPts .pTtl {
   font-size: 1.1rem; font-weight: 700; line-height: 1.45;
@@ -420,8 +427,9 @@ body.dark .blogPts > *.is-linked:hover { background: rgba(255, 255, 255, 0.08); 
   position: relative;
 }
 .blogPts .pTtl a { text-decoration: none; color: inherit; }
-.blogPts > *.is-linked:hover .pTtl a { color: var(--primary); }
+.blogPts > .ntry:hover .pTtl a { color: var(--primary); }
 
+/* Exactly 2 lines of snippet */
 .blogPts .pSnpt {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -429,7 +437,9 @@ body.dark .blogPts > *.is-linked:hover { background: rgba(255, 255, 255, 0.08); 
   overflow: hidden;
   font-size: 13.5px; line-height: 1.55;
   margin: 0 0 8px; opacity: .75;
+  min-height: calc(1.55em * 2);
 }
+
 .blogPts .pInf {
   display: block; position: static;
   margin: 0; padding: 0;
@@ -461,7 +471,7 @@ body.dark .blogPts > *.is-linked:hover { background: rgba(255, 255, 255, 0.08); 
 .blogPg > *:hover { opacity: .9; }
 
 @media screen and (max-width: 640px) {
-  .blogPts > * { padding: 12px 18px; }
+  .blogPts > .ntry { padding: 12px 18px; }
   .blogPts .pTtl { font-size: 1rem; margin-bottom: 4px; }
   .blogPts .pSnpt { font-size: 12.5px; line-height: 1.5; margin-bottom: 6px; -webkit-line-clamp: 2; }
   .blogPts .pInf { font-size: 11.5px; }
@@ -664,7 +674,6 @@ body.dark .blogPts > *.is-linked:hover { background: rgba(255, 255, 255, 0.08); 
   </div>
 </footer>
 
-<!-- ================= JAVASCRIPT ================= -->
 <script>
 document.getElementById('footerText').innerHTML = `© ${new Date().getFullYear()} Yashintv`;
 
@@ -1136,7 +1145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const cleaned = raw.replace(/^\/+/, '').replace(/^blogs\//, '').replace(/\.html$/, '');
       const href = 'blogs/' + cleaned;
       return `
-        <div class="ntry is-linked">
+        <div class="ntry">
           <div class="pCntn">
             <h3 class="pTtl"><a href="${href}" class="stretched">${esc(b.title || 'Untitled')}</a></h3>
             <p class="pSnpt">${esc(b.snippet || '')}</p>
