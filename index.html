@@ -382,8 +382,20 @@ body.dark .matches-section {
   .matches-section .match-time { max-width: 150px; }
 }
 
+/* ================= NATIVE AD SLOT ================= */
+.ad-banner-container {
+  margin: 2rem 0;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
 /* ================= LATEST BLOGS ================= */
-.blogs-wrapper { margin-top: 2rem; }
+.blogs-wrapper { margin-top: 0; }
 .blogs-header { margin: 0 0 20px; padding: 0; width: 100%; display: block; }
 .blogs-header h2 { font-size: 1.5rem; font-weight: 700; margin: 0; color: var(--text); }
 
@@ -397,7 +409,6 @@ body.dark .matches-section {
   overflow: hidden;
 }
 
-/* The entire row is clickable */
 .blogPts > .ntry {
   display: block; width: 100%; max-width: 100%;
   margin: 0; padding: 18px 25px;
@@ -412,7 +423,6 @@ body.dark .matches-section {
 .blogPts > .ntry:hover { background: #eaeaea; }
 body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* The title no longer needs a stretched link, JS will handle the click */
 .blogPts .pTtl {
   font-size: 1.1rem; font-weight: 700; line-height: 1.45;
   margin: 0 0 6px; color: var(--text);
@@ -422,7 +432,6 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 .blogPts .pTtl a { text-decoration: none; color: inherit; }
 .blogPts > .ntry:hover .pTtl a { color: var(--primary); }
 
-/* Exactly 2 lines of snippet */
 .blogPts .pSnpt {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -430,7 +439,6 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
   overflow: hidden;
   font-size: 13.5px; line-height: 1.55;
   margin: 0 0 8px; opacity: .75;
-  /* Ensure it occupies the exact height of 2 lines even if text is short */
   min-height: calc(1.55em * 2);
 }
 
@@ -613,6 +621,11 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
       </div>
     </section>
 
+    <!-- NATIVE AD SLOT -->
+    <div class="ad-banner-container" id="native-ad-slot">
+      <!-- You can paste your ad code directly here manually -->
+    </div>
+
     <section class="blogs-wrapper" id="articles-link">
       <div class="blogs-header"><h2>Latest Blogs</h2></div>
       <div class="blogPts" id="latestBlogs">
@@ -669,6 +682,11 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 </footer>
 
 <script>
+// Prevent scroll jumping on refresh
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 document.getElementById('footerText').innerHTML = `© ${new Date().getFullYear()} Yashintv`;
 
 const themeToggleDesktop = document.getElementById('themeToggleDesktop');
