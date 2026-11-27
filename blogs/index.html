@@ -51,9 +51,8 @@
       container.innerHTML = list.map(b => {
         const raw = b.file || (b.slug + '.html');
         const cleaned = raw.replace(/^\/+/, '').replace(/^blogs\//, '').replace(/\.html$/, '');
-        const href = cleaned;   // sibling file inside /blogs/
         return `
-          <a class="blog-item" href="${href}">
+          <a class="blog-item" href="${cleaned}">
             <h2>${esc(b.title || 'Untitled')}</h2>
             <p>${esc(b.snippet || '')}</p>
             <div class="meta">${esc(b.date || '')} · By Admin</div>
