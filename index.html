@@ -412,14 +412,7 @@ body.dark .matches-section {
 .blogPts > .ntry:hover { background: #eaeaea; }
 body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* Invisible stretched link */
-.blogPts .pTtl a.stretched::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
+/* The title no longer needs a stretched link, JS will handle the click */
 .blogPts .pTtl {
   font-size: 1.1rem; font-weight: 700; line-height: 1.45;
   margin: 0 0 6px; color: var(--text);
@@ -437,6 +430,7 @@ body.dark .blogPts > .ntry:hover { background: rgba(255, 255, 255, 0.08); }
   overflow: hidden;
   font-size: 13.5px; line-height: 1.55;
   margin: 0 0 8px; opacity: .75;
+  /* Ensure it occupies the exact height of 2 lines even if text is short */
   min-height: calc(1.55em * 2);
 }
 
@@ -1145,9 +1139,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const cleaned = raw.replace(/^\/+/, '').replace(/^blogs\//, '').replace(/\.html$/, '');
       const href = 'blogs/' + cleaned;
       return `
-        <div class="ntry">
+        <div class="ntry" onclick="window.location.href='${href}'" style="cursor:pointer;">
           <div class="pCntn">
-            <h3 class="pTtl"><a href="${href}" class="stretched">${esc(b.title || 'Untitled')}</a></h3>
+            <h3 class="pTtl"><a href="${href}">${esc(b.title || 'Untitled')}</a></h3>
             <p class="pSnpt">${esc(b.snippet || '')}</p>
             <div class="pInf"></div>
           </div>
